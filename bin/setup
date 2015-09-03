@@ -14,6 +14,7 @@ tar zxf ${file}
 rm -f ${file}
 
 GOROOT=${OPENSHIFT_HOMEDIR}app-root/go
+mkdir -p ${GOROOT}
 mv go ${GOROOT}
 
 GOPATH=${OPENSHIFT_HOMEDIR}app-root/runtime/go
