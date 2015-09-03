@@ -1,7 +1,7 @@
 #!/bin/bash
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-PIDFILE=${OPENSHIFT_HOMEDIR}run.pid
+PIDFILE=${OPENSHIFT_GO_DIR}run.pid
 if [ -f ${PIDFILE} ]
 then 
   kill `echo $PIDFILE`

@@ -2,4 +2,4 @@
 
 nohup ${GOBIN}/server >/dev/null 2>&1 &
 pid=$!
-echo $pid > ${OPENSHIFT_HOMEDIR}run.pid
+echo $pid > ${OPENSHIFT_GO_DIR}run.pid
