@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ${OPENSHIFT_REPO_DIR}
+cd ${GOPATH}/src/${OPENSHIFT_APP_NAME}
 go get -d > /dev/null 2>&1
-go install server.go  > /dev/null 2>&1
+go install > /dev/null 2>&1

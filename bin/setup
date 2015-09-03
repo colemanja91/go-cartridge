@@ -13,11 +13,10 @@ curl -sO ${url}
 tar zxf ${file}
 rm -f ${file}
 
-GOROOT=${OPENSHIFT_HOMEDIR}app-root/go
-mkdir -p ${GOROOT}
-mv go ${GOROOT}
+GOROOT=${OPENSHIFT_HOMEDIR}app-root/runtime/go
+mv go ${OPENSHIFT_HOMEDIR}app-root/runtime/
 
-GOPATH=${OPENSHIFT_HOMEDIR}app-root/runtime/go
+GOPATH=${OPENSHIFT_GO_DIR}go
 mkdir -p ${GOPATH}/src
 mkdir -p ${GOPATH}/pkg
 
@@ -28,3 +27,5 @@ set_env_var GOROOT ${GOROOT} ${OPENSHIFT_GO_DIR}env
 set_env_var GOPATH ${GOPATH} ${OPENSHIFT_GO_DIR}env
 set_env_var GOBIN ${GOBIN} ${OPENSHIFT_GO_DIR}env
 
+cd ${GOPATH}/src
+ln -s ${OPENSHIFT_REPO_DIR} ${OPENSHIFT_APP_NAME}
