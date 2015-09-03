@@ -1,0 +1,29 @@
+#!/bin/bash
+source ${OPENSHIFT_CARTRIDGE_SDK_BASH}
+case "$1" in
+  -v|--version)
+    version="$2"
+esac
+
+file=go${version:-1.5}.linux-amd64.tar.gz
+url=https://storage.googleapis.com/golang/${file}
+echo $file
+cd ${OPENSHIFT_TMP_DIR}
+curl -sO ${url}
+tar zxf ${file}
+rm -f ${file}
+
+GOROOT=${OPENSHIFT_HOMEDIR}app-root/go
+mv go ${GOROOT}
+
+GOPATH=${OPENSHIFT_HOMEDIR}app-root/runtime/go
+mkdir -p ${GOPATH}/src
+mkdir -p ${GOPATH}/pkg
+
+GOBIN=${GOPATH}/bin
+mkdir -p ${GOBIN}
+
+set_env_var GOROOT ${GOROOT} ${OPENSHIFT_GO_DIR}env
+set_env_var GOPATH ${GOPATH} ${OPENSHIFT_GO_DIR}env
+set_env_var GOBIN ${GOBIN} ${OPENSHIFT_GO_DIR}env
+

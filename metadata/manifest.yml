@@ -1,0 +1,53 @@
+---
+Name: Go
+Cartridge-Short-Name: GO
+Cartridge-Version: '0.0.1'
+Compatible-Versions:
+  - '0.0.1'
+Cartridge-Vendor: jasonkit
+Display-Name: Go 1.5
+Description: "Go is an open source programming language that makes it easy to build simple, reliable, and efficient software."
+Version: '1.5'
+Versions:
+  - '1.5'
+License: "BSD License"
+License-Url: https://golang.org/LICENSE
+Vendor: The Go Authors
+Categories:
+  - service
+  - web_framework
+  - experimental
+Website: http://golang.org
+Provides:
+  - go-1.5
+  - go
+Scaling:
+  Min: 1
+  Max: -1
+Publishes:
+Subscribes:
+  set-db-connection-info:
+    Type: "ENV:NET_TCP:db:connection-info"
+    Required: false
+  set-mysql-connection-info:
+    Type: "NET_TCP:db:mysql"
+    Required : false
+  set-postgres-connection-info:
+    Type: "NET_TCP:db:postgres"
+    Required : false
+  set-nosql-db-connection-info:
+    Type: "ENV:NET_TCP:nosqldb:connection-info"
+    Required : false
+Group-Overrides:
+  - components:
+    - web_proxy
+Endpoints:
+  - Private-IP-Name:  IP
+    Private-Port-Name: PORT
+    Private-Port: 8080
+    Public-Port-Name: PROXY_PORT
+    Mappings:
+      - Frontend: ""
+        Backend: ""
+        Options:
+          websocket: true

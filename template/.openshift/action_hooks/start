@@ -1,0 +1,5 @@
+#!/bin/bash
+
+nohup ${GOBIN}/server >/dev/null 2>&1 &
+pid=$!
+echo $pid > ${OPENSHIFT_HOMEDIR}run.pid

@@ -1,0 +1,12 @@
+#!/bin/bash
+source $OPENSHIFT_CARTRIDGE_SDK_BASH
+
+PIDFILE=${OPENSHIFT_HOMEDIR}run.pid
+if [ -f ${PIDFILE} ]
+then 
+  kill `echo $PIDFILE`
+  rm -f $PIDFILE 
+else
+  client_result "Applicationi is not running"
+fi
+
