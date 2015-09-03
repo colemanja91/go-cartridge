@@ -4,7 +4,7 @@ source $OPENSHIFT_CARTRIDGE_SDK_BASH
 PIDFILE=${OPENSHIFT_GO_DIR}run.pid
 if [ -f ${PIDFILE} ]
 then 
-  kill `echo $PIDFILE`
+  kill `cat $PIDFILE`
   rm -f $PIDFILE 
 else
   client_result "Applicationi is not running"

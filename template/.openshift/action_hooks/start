@@ -1,5 +1,9 @@
 #!/bin/bash
 
-nohup ${GOBIN}/server >/dev/null 2>&1 &
+if [ ! -f ${GOBIN}/${OPENSHIFT_APP_NAME} ]; then
+  $OPENSHIFT_REPO_DIR/.openshift/action_hooks/build
+fi
+
+nohup ${GOBIN}/${OPENSHIFT_APP_NAME} >/dev/null 2>&1 &
 pid=$!
 echo $pid > ${OPENSHIFT_GO_DIR}run.pid
