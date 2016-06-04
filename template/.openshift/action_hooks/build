@@ -1,5 +1,13 @@
 #!/bin/bash
 
 cd ${GOPATH}/src/${OPENSHIFT_APP_NAME}
-go get -d > /dev/null 2>&1
-go install > /dev/null 2>&1
+
+if [ -f $OPENSHIFT_REPO_DIR/.godir ]; then
+  while read p; do
+    go get -d $p
+    go install $p
+  done <$OPENSHIFT_REPO_DIR/.godir
+else
+  go get -d > /dev/null 2>&1
+  go install > /dev/null 2>&1
+fi

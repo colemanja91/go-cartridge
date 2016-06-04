@@ -1,0 +1,5 @@
+github.com/prometheus/prometheus
+github.com/prometheus/alertmanager
+github.com/prometheus/promdash
+github.com/prometheus/pushgateway
+github.com/prometheus/haproxy_exporter
