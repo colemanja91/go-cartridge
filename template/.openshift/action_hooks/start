@@ -1,9 +1,17 @@
 #!/bin/bash
 
-if [ ! -f ${GOBIN}/${OPENSHIFT_APP_NAME} ]; then
-  $OPENSHIFT_REPO_DIR/.openshift/action_hooks/build
-fi
+if [ -f $OPENSHIFT_REPO_DIR/.godir ]; then
+  #start prometheus
+  nohup ${GOBIN}/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=":8080" >/dev/null 2>&1 &
+  pid=$!
+  echo $pid > ${OPENSHIFT_GO_DIR}run.pid
 
-nohup ${GOBIN}/${OPENSHIFT_APP_NAME} >/dev/null 2>&1 &
-pid=$!
-echo $pid > ${OPENSHIFT_GO_DIR}run.pid
+else
+  if [ ! -f ${GOBIN}/${OPENSHIFT_APP_NAME} ]; then
+    $OPENSHIFT_REPO_DIR/.openshift/action_hooks/build
+  fi
+
+  nohup ${GOBIN}/${OPENSHIFT_APP_NAME} >/dev/null 2>&1 &
+  pid=$!
+  echo $pid > ${OPENSHIFT_GO_DIR}run.pid
+fi
