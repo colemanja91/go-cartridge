@@ -1,6 +1,12 @@
 #!/bin/bash
 
+# check for prometheus data dir; create one
+
+if [ -d $OPENSHIFT_DATA_DIR/prometheus ]; then
+  mkdir -p $OPENSHIFT_DATA_DIR/prometheus
+fi
+
 #start prometheus
-nohup ${GOBIN}/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=":8080" >/dev/null 2>&1 &
+nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=$OPENSHIFT_GO_IP":"$OPENSHIFT_GO_PORT -storage.local.path $OPENSHIFT_DATA_DIR/prometheus >/dev/null 2>&1 &
 pid=$!
 echo $pid > ${OPENSHIFT_GO_DIR}run.pid
