@@ -12,6 +12,11 @@ if [ -d $OPENSHIFT_DATA_DIR/prometheus ]; then
   mkdir -p $OPENSHIFT_DATA_DIR/prometheus
 fi
 
+# modify prometheus.yml config with self IP address and port
+
+sed -i '' -e "s/OPENSHIFT_GO_IP/$OPENSHIFT_GO_IP/" $OPENSHIFT_REPO_DIR/prometheus.yml
+sed -i '' -e "s/OPENSHIFT_GO_PORT/$OPENSHIFT_GO_PORT/" $OPENSHIFT_REPO_DIR/prometheus.yml
+
 #start prometheus
 nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=$OPENSHIFT_GO_IP":"$OPENSHIFT_GO_PORT -storage.local.path $OPENSHIFT_DATA_DIR/prometheus >/dev/null 2>&1 &
 pid=$!
