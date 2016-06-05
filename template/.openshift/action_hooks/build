@@ -1,13 +1,10 @@
 #!/bin/bash
+# build prometheus if doesn't exist
 
-cd ${GOPATH}/src/${OPENSHIFT_APP_NAME}
-
-if [ -f $OPENSHIFT_REPO_DIR/.godir ]; then
-  while read p; do
-    go get -d $p
-    go install $p
-  done <$OPENSHIFT_REPO_DIR/.godir
-else
-  go get -d > /dev/null 2>&1
-  go install > /dev/null 2>&1
+if [ -f ${GOBIN}/prometheus ]; then
+  mkdir -p $GOPATH/src/github.com/prometheus
+  cd $GOPATH/src/github.com/prometheus
+  git clone https://github.com/prometheus/prometheus.git
+  cd prometheus
+  make build
 fi
