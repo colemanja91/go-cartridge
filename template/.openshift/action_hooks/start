@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# check for prometheus executable and build if not found
+
+if [ ! -f ${GOPATH}/src/github.com/prometheus/prometheus/prometheus ]; then
+  $OPENSHIFT_REPO_DIR/.openshift/action_hooks/build
+fi
+
 # check for prometheus data dir; create one
 
 if [ -d $OPENSHIFT_DATA_DIR/prometheus ]; then
