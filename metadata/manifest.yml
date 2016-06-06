@@ -51,35 +51,43 @@ Endpoints:
         Backend: ""
         Options:
           websocket: true
-  - Private-IP-Name:  ALERTMANAGER_IP
-    Private-Port-Name: ALERTMANAGER_PORT
-    #Private-Port: 9093
-    Private-Port: 30000
-    Public-Port-Name: ALERTMANAGER_PORT
-    Mappings:
       - Frontend: "/alertmanager"
-        Backend: ""
-  - Private-IP-Name:  PUSHGATEWAY_IP
-    Private-Port-Name: PUSHGATEWAY_PORT
-    #Private-Port: 9091
-    Private-Port: 30001
-    Public-Port-Name: PUSHGATEWAY_PORT
-    Mappings:
+        Backend: "/alertmanager"
       - Frontend: "/pushgateway"
-        Backend: ""
-  - Private-IP-Name:  HAPROXY_IP
-    Private-Port-Name: HAPROXY_PORT
-    #Private-Port: 9101
-    Private-Port: 30002
-    Public-Port-Name: HAPROXY_PORT
-    Mappings:
+        Backend: "/pushgateway"
       - Frontend: "/haproxy_exporter"
-        Backend: ""
-  - Private-IP-Name:  NODE_IP
-    Private-Port-Name: NODE_PORT
-    #Private-Port: 9100
-    Private-Port: 30003
-    Public-Port-Name: NODE_PORT
-    Mappings:
+        Backend: "/haproxy_exporter"
       - Frontend: "/node_exporter"
-        Backend: ""
+        Backend: "/node_exporter"
+  # - Private-IP-Name:  ALERTMANAGER_IP
+  #   Private-Port-Name: ALERTMANAGER_PORT
+  #   #Private-Port: 9093
+  #   Private-Port: 30000
+  #   Public-Port-Name: ALERTMANAGER_PORT
+  #   Mappings:
+  #     - Frontend: "/alertmanager"
+  #       Backend: ""
+  # - Private-IP-Name:  PUSHGATEWAY_IP
+  #   Private-Port-Name: PUSHGATEWAY_PORT
+  #   #Private-Port: 9091
+  #   Private-Port: 30001
+  #   Public-Port-Name: PUSHGATEWAY_PORT
+  #   Mappings:
+  #     - Frontend: "/pushgateway"
+  #       Backend: ""
+  # - Private-IP-Name:  HAPROXY_IP
+  #   Private-Port-Name: HAPROXY_PORT
+  #   #Private-Port: 9101
+  #   Private-Port: 30002
+  #   Public-Port-Name: HAPROXY_PORT
+  #   Mappings:
+  #     - Frontend: "/haproxy_exporter"
+  #       Backend: ""
+  # - Private-IP-Name:  NODE_IP
+  #   Private-Port-Name: NODE_PORT
+  #   #Private-Port: 9100
+  #   Private-Port: 30003
+  #   Public-Port-Name: NODE_PORT
+  #   Mappings:
+  #     - Frontend: "/node_exporter"
+  #       Backend: ""
