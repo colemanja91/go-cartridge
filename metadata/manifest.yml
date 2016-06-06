@@ -57,7 +57,7 @@ Endpoints:
     Public-Port-Name: ALERTMANAGER_PORT
     Mappings:
       - Frontend: "/alertmanager"
-        Backend: "/alermanager_back"
+        Backend: ""
         Options:
           websocket: true
   - Private-IP-Name:  PUSHGATEWAY_IP
@@ -66,7 +66,7 @@ Endpoints:
     Public-Port-Name: PUSHGATEWAY_PORT
     Mappings:
       - Frontend: "/pushgateway"
-        Backend: "/pushgateway_back"
+        Backend: ""
         Options:
           websocket: true
   - Private-IP-Name:  HAPROXY_IP
@@ -75,7 +75,7 @@ Endpoints:
     Public-Port-Name: HAPROXY_PORT
     Mappings:
       - Frontend: "/haproxy_exporter"
-        Backend: "/haproxy_exporter_back"
+        Backend: ""
         Options:
           websocket: true
   - Private-IP-Name:  NODE_IP
@@ -84,6 +84,6 @@ Endpoints:
     Public-Port-Name: NODE_PORT
     Mappings:
       - Frontend: "/node_exporter"
-        Backend: "/node_exporter_back"
+        Backend: ""
         Options:
           websocket: true
