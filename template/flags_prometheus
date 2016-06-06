@@ -1,0 +1,1 @@
+-config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=${OPENSHIFT_GO_IP}:${OPENSHIFT_GO_PORT} -storage.local.path ${OPENSHIFT_DATA_DIR}/prometheus
