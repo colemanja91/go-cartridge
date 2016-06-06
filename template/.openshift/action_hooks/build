@@ -8,3 +8,16 @@ if [ ! -f ${GOPATH}/src/github.com/prometheus/prometheus/prometheus ]; then
   cd prometheus
   make build
 fi
+
+# build packages if they don't exist
+
+if [ -f ${OPENSHIFT_REPO_DIR}/.prompkg ]; then
+  while read p; do
+    if [ ! -d ${GOPATH}/src/github.com/prometheus/$(basename $p) ]; then
+      cd $GOPATH/src/github.com/prometheus
+      git clone "https://"$p".git"
+      cd $(basename $p)
+      make build
+    fi
+  done <$OPENSHIFT_REPO_DIR/.prompkg
+fi
