@@ -28,15 +28,23 @@ sed -i '' -e "s/OPENSHIFT_GO_IP/$OPENSHIFT_GO_IP/" $OPENSHIFT_REPO_DIR/prometheu
 sed -i '' -e "s/OPENSHIFT_GO_PORT/$OPENSHIFT_GO_PORT/" $OPENSHIFT_REPO_DIR/prometheus.yml
 
 #start prometheus
-nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=$OPENSHIFT_GO_IP":"$OPENSHIFT_GO_PORT -storage.local.path $OPENSHIFT_DATA_DIR/prometheus >/dev/null 2>&1 &
+#nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=$OPENSHIFT_GO_IP":"$OPENSHIFT_GO_PORT -storage.local.path $OPENSHIFT_DATA_DIR/prometheus >/dev/null 2>&1 &
+a=$(perl -pe 's/\${(\w+)}/$ENV{$1}/g' $OPENSHIFT_REPO_DIR/flags_prometheus)
+nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus $a >>$OPENSHIFT_LOG_DIR/prometheus.log 2>&1 &
 pid=$!
 echo $pid > ${OPENSHIFT_GO_DIR}run.pid
 
-# start packages
-#
-# if [ -f ${OPENSHIFT_REPO_DIR}/.prompkg ]; then
-#   while read p; do
-#     nohup ${GOPATH}/src/github.com/prometheus/$(basename $p)/$(basename $p) >/dev/null 2>&1 &
-#     pid=$!
-#     echo $pid >> ${OPENSHIFT_GO_DIR}run.pid
-# fi
+#start packages
+
+if [ -f ${OPENSHIFT_REPO_DIR}/.prompkg ]; then
+  while read p; do
+    if [ -f $OPENSHIFT_REPO_DIR/flags_$(basename $p) ]; then
+      a=$(perl -pe 's/\${(\w+)}/$ENV{$1}/g' $OPENSHIFT_REPO_DIR/flags_$(basename $p))
+      nohup ${GOPATH}/src/github.com/prometheus/$(basename $p)/$(basename $p) $a >>$OPENSHIFT_LOG_DIR/$(basename $p).log 2>&1 &
+      pid=$!
+      echo $pid >> ${OPENSHIFT_GO_DIR}run.pid
+    else
+      echo "no file flags_$(basename $p)"
+    fi
+  done <$OPENSHIFT_REPO_DIR/.prompkg
+fi
