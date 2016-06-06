@@ -22,13 +22,11 @@ if [ -d $OPENSHIFT_DATA_DIR/prometheus ]; then
   mkdir -p $OPENSHIFT_DATA_DIR/prometheus
 fi
 
-# modify prometheus.yml config with self IP address and port
-
-sed -i '' -e "s/OPENSHIFT_GO_IP/$OPENSHIFT_GO_IP/" $OPENSHIFT_REPO_DIR/prometheus.yml
-sed -i '' -e "s/OPENSHIFT_GO_PORT/$OPENSHIFT_GO_PORT/" $OPENSHIFT_REPO_DIR/prometheus.yml
+# modify prometheus.yml with environment variables
+perl -pi -e 's/\${(\w+)}/$ENV{$1}/g' $OPENSHIFT_REPO_DIR/prometheus.yml
 
 #start prometheus
-#nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus -config.file=${OPENSHIFT_REPO_DIR}/prometheus.yml -web.listen-address=$OPENSHIFT_GO_IP":"$OPENSHIFT_GO_PORT -storage.local.path $OPENSHIFT_DATA_DIR/prometheus >/dev/null 2>&1 &
+# get command flags and replace env vars
 a=$(perl -pe 's/\${(\w+)}/$ENV{$1}/g' $OPENSHIFT_REPO_DIR/flags_prometheus)
 nohup ${GOPATH}/src/github.com/prometheus/prometheus/prometheus $a >>$OPENSHIFT_LOG_DIR/prometheus.log 2>&1 &
 pid=$!
@@ -39,6 +37,7 @@ echo $pid > ${OPENSHIFT_GO_DIR}run.pid
 if [ -f ${OPENSHIFT_REPO_DIR}/.prompkg ]; then
   while read p; do
     if [ -f $OPENSHIFT_REPO_DIR/flags_$(basename $p) ]; then
+      # get command flags and replace env vars
       a=$(perl -pe 's/\${(\w+)}/$ENV{$1}/g' $OPENSHIFT_REPO_DIR/flags_$(basename $p))
       nohup ${GOPATH}/src/github.com/prometheus/$(basename $p)/$(basename $p) $a >>$OPENSHIFT_LOG_DIR/$(basename $p).log 2>&1 &
       pid=$!
