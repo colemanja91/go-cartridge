@@ -51,3 +51,39 @@ Endpoints:
         Backend: ""
         Options:
           websocket: true
+  - Private-IP-Name:  ALERTMANAGER_IP
+    Private-Port-Name: ALERTMANAGER_PORT
+    Private-Port: 9093
+    Public-Port-Name: ALERTMANAGER_PORT
+    Mappings:
+      - Frontend: "/alertmanager"
+        Backend: "/alermanager_back"
+        Options:
+          websocket: true
+  - Private-IP-Name:  PUSHGATEWAY_IP
+    Private-Port-Name: PUSHGATEWAY_PORT
+    Private-Port: 9091
+    Public-Port-Name: PUSHGATEWAY_PORT
+    Mappings:
+      - Frontend: "/pushgateway"
+        Backend: "/pushgateway_back"
+        Options:
+          websocket: true
+  - Private-IP-Name:  HAPROXY_IP
+    Private-Port-Name: HAPROXY_PORT
+    Private-Port: 9101
+    Public-Port-Name: HAPROXY_PORT
+    Mappings:
+      - Frontend: "/haproxy_exporter"
+        Backend: "/haproxy_exporter_back"
+        Options:
+          websocket: true
+  - Private-IP-Name:  NODE_IP
+    Private-Port-Name: NODE_PORT
+    Private-Port: 9100
+    Public-Port-Name: NODE_PORT
+    Mappings:
+      - Frontend: "/node_exporter"
+        Backend: "/node_exporter_back"
+        Options:
+          websocket: true
