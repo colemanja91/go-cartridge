@@ -65,7 +65,7 @@ Endpoints:
     Private-Port: 8080
     Public-Port-Name: PUSHGATEWAY_PORT
     Mappings:
-      - Frontend: "/pushgateway"
+      - Frontend: ":9090/pushgateway"
         Backend: ""
   - Private-IP-Name:  HAPROXY_IP
     Private-Port-Name: HAPROXY_PORT
