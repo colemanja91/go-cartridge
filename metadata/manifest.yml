@@ -58,7 +58,7 @@ Endpoints:
     Public-Port-Name: ALERTMANAGER_PORT
     Mappings:
       - Frontend: "/alertmanager"
-        Backend: "/alertmanager"
+        Backend: ""
   - Private-IP-Name:  PUSHGATEWAY_IP
     Private-Port-Name: PUSHGATEWAY_PORT
     #Private-Port: 9091
@@ -66,7 +66,7 @@ Endpoints:
     Public-Port-Name: PUSHGATEWAY_PORT
     Mappings:
       - Frontend: "/pushgateway"
-        Backend: "/pushgateway"
+        Backend: ""
   - Private-IP-Name:  HAPROXY_IP
     Private-Port-Name: HAPROXY_PORT
     #Private-Port: 9101
@@ -74,7 +74,7 @@ Endpoints:
     Public-Port-Name: HAPROXY_PORT
     Mappings:
       - Frontend: "/haproxy_exporter"
-        Backend: "/haproxy_exporter"
+        Backend: ""
   - Private-IP-Name:  NODE_IP
     Private-Port-Name: NODE_PORT
     #Private-Port: 9100
@@ -82,4 +82,4 @@ Endpoints:
     Public-Port-Name: NODE_PORT
     Mappings:
       - Frontend: "/node_exporter"
-        Backend: "/node_exporter"
+        Backend: ""
